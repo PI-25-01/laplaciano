@@ -81,6 +81,7 @@ pub fn main() !void {
 
                 // Multi vetor para guardar as core * coeficientes
                 var lapla = std.MultiArrayList(LaplaTable).empty;
+                defer lapla.clearAndFree(allocator);
                 try lapla.setCapacity(allocator, m1_cor.len);
 
                 var min = [_]isize{std.math.maxInt(isize)} ** 4;
@@ -113,16 +114,16 @@ pub fn main() !void {
                     cor1.b = cor1.r;
 
                     cor2.r = @as(u8, (@intFromFloat(std.math.round(@as(f64, @floatFromInt(l.m2 - min[1])) / @as(f64, @floatFromInt(max[1] - min[1])) * 255))));
-                    cor2.g = cor1.r;
-                    cor2.b = cor1.r;
+                    cor2.g = cor2.r;
+                    cor2.b = cor2.r;
 
                     cor3.r = @as(u8, (@intFromFloat(std.math.round(@as(f64, @floatFromInt(l.m3 - min[2])) / @as(f64, @floatFromInt(max[2] - min[2])) * 255))));
-                    cor3.g = cor1.r;
-                    cor3.b = cor1.r;
+                    cor3.g = cor3.r;
+                    cor3.b = cor3.r;
 
                     cor4.r = @as(u8, (@intFromFloat(std.math.round(@as(f64, @floatFromInt(l.m4 - min[3])) / @as(f64, @floatFromInt(max[3] - min[3])) * 255))));
-                    cor4.g = cor1.r;
-                    cor4.b = cor1.r;
+                    cor4.g = cor4.r;
+                    cor4.b = cor4.r;
                 }
 
                 m1.data = m1_cor.ptr;
@@ -167,13 +168,13 @@ pub fn main() !void {
             rl.drawTexture(m1_tx.?, 1 * (og_tx.?.width + 64), 64, .white);
 
             rl.drawText("Filtro B", 2 * (og_tx.?.width + 64), 4, 32, .black);
-            rl.drawTexture(m1_tx.?, 2 * (og_tx.?.width + 64), 64, .white);
+            rl.drawTexture(m2_tx.?, 2 * (og_tx.?.width + 64), 64, .white);
 
             rl.drawText("Filtro C", 1 * (og_tx.?.width + 64), og_tx.?.height + 4 + 64, 32, .black);
-            rl.drawTexture(m1_tx.?, 1 * (og_tx.?.width + 64), og_tx.?.height + 128, .white);
+            rl.drawTexture(m3_tx.?, 1 * (og_tx.?.width + 64), og_tx.?.height + 128, .white);
 
             rl.drawText("Filtro D", 2 * (og_tx.?.width + 64), og_tx.?.height + 4 + 64, 32, .black);
-            rl.drawTexture(m1_tx.?, 2 * (og_tx.?.width + 64), og_tx.?.height + 128, .white);
+            rl.drawTexture(m4_tx.?, 2 * (og_tx.?.width + 64), og_tx.?.height + 128, .white);
         } else {
             rl.drawText("Arraste uma imagem aqui para começar", 4, 4, 32, .black);
         }
